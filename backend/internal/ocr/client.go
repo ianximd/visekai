@@ -34,8 +34,8 @@ func NewClient(baseURL string) *Client {
 
 // OCRRequest represents a request to the OCR service
 type OCRRequest struct {
-	Mode       string `json:"mode"`        // document, handwritten, general, figure
-	Resolution string `json:"resolution"`  // tiny, small, base, large, gundam
+	Mode       string `json:"mode"`       // document, handwritten, general, figure
+	Resolution string `json:"resolution"` // tiny, small, base, large, gundam
 }
 
 // OCRResponse represents a response from the OCR service
@@ -94,7 +94,7 @@ func (c *Client) ProcessDocument(ctx context.Context, filePath string, ocrMode m
 
 	// Send request
 	logger.Info("Sending OCR request", "url", url, "file", filepath.Base(filePath), "mode", ocrMode, "resolution", resolutionMode)
-	
+
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
@@ -132,7 +132,7 @@ func (c *Client) ProcessDocument(ctx context.Context, filePath string, ocrMode m
 // HealthCheck checks if the OCR service is healthy
 func (c *Client) HealthCheck(ctx context.Context) error {
 	url := fmt.Sprintf("%s/health", c.baseURL)
-	
+
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
@@ -154,7 +154,7 @@ func (c *Client) HealthCheck(ctx context.Context) error {
 // GetStatus gets the status of the OCR service
 func (c *Client) GetStatus(ctx context.Context) (map[string]interface{}, error) {
 	url := fmt.Sprintf("%s/status", c.baseURL)
-	
+
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)

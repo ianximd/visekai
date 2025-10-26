@@ -109,7 +109,7 @@ func (h *DocumentHandler) Upload(c *gin.Context) {
 	if err == nil && existingDoc != nil {
 		// Delete the newly uploaded file since it's a duplicate
 		_ = h.storage.DeleteFile(filePath)
-		
+
 		c.JSON(http.StatusOK, models.NewSuccessResponse(
 			existingDoc,
 			"File already exists (duplicate detected)",
@@ -133,7 +133,7 @@ func (h *DocumentHandler) Upload(c *gin.Context) {
 	if err != nil {
 		// Clean up file on database error
 		_ = h.storage.DeleteFile(filePath)
-		
+
 		c.JSON(http.StatusInternalServerError, models.NewErrorResponse(
 			"SYS_003",
 			"Failed to create document record",

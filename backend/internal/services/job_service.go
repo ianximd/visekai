@@ -234,13 +234,13 @@ func (s *JobService) processJob(ctx context.Context, jobID uuid.UUID) {
 	if err != nil {
 		errorMsg := fmt.Sprintf("OCR processing failed: %v", err)
 		_ = s.jobRepo.UpdateStatus(ctx, jobID, models.JobStatusFailed, &errorMsg)
-		
+
 		// Check if we should retry
 		if job.RetryCount < job.MaxRetries {
 			_ = s.jobRepo.IncrementRetryCount(ctx, jobID)
 			_ = s.jobRepo.UpdateStatus(ctx, jobID, models.JobStatusPending, nil)
 			logger.Warn("OCR processing failed, will retry", "job_id", jobID, "retry_count", job.RetryCount+1, "error", err)
-			
+
 			// Retry after a delay
 			time.Sleep(10 * time.Second)
 			go s.processJob(context.Background(), jobID)
