@@ -1,0 +1,15 @@
+# Storage Directory
+
+This directory is used for storing uploaded files, processed results, and temporary files.
+
+## Structure
+
+- `uploads/` - Original uploaded documents
+- `results/` - OCR processing results
+- `temp/` - Temporary files during processing
+- `thumbnails/` - Document thumbnails for preview
+
+## Note
+
+These directories are excluded from git (see `.gitignore`).
+Files in these directories will be mounted as Docker volumes.
